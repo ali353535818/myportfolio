@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TravelHub — Book Your Next Adventure</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-grid">
+      <a class="brand" href="#home">Travel<span>Hub</span></a>
+      <nav class="nav">
+        <a href="#destinations">Destinations</a>
+        <a href="#booking">Booking</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="cta" id="open-book">Book Now</button>
+    </div>
+  </header>
+
+  <!-- HERO with search -->
+  <section id="home" class="hero">
+    <div class="overlay"></div>
+    <div class="container hero-grid">
+      <div class="hero-left reveal">
+        <h1>Explore the world. <span class="accent">Book</span> with confidence.</h1>
+        <p class="lead">Handpicked destinations, honest prices, smooth booking — all in one place.</p>
+
+        <div class="search-card">
+          <form id="search-form" class="search-form" autocomplete="off">
+            <div class="row">
+              <div class="field">
+                <label>Destination</label>
+                <input id="search-dest" list="dest-list" placeholder="e.g. Maldives" />
+                <datalist id="dest-list">
+                  <option value="Maldives">
+                  <option value="Paris">
+                  <option value="Dubai">
+                  <option value="Bali">
+                  <option value="Istanbul">
+                </datalist>
+              </div>
+              <div class="field">
+                <label>Check-in</label>
+                <input id="search-date" type="date" />
+              </div>
+              <div class="field">
+                <label>Guests</label>
+                <select id="search-guests">
+                  <option>1</option><option>2</option><option>3</option><option>4+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row actions">
+              <div class="filters-mini">
+                <button type="button" id="open-filters" class="link-btn">Advanced filters ▾</button>
+                <span class="muted">Results: <span id="result-count">10</span></span>
+              </div>
+              <button class="btn" type="submit">Search</button>
+            </div>
+          </form>
+
+          <!-- ADVANCED FILTERS -->
+          <div id="advanced-filters" class="advanced-filters">
+            <div class="filter-row">
+              <label>Category</label>
+              <div class="chips">
+                <button data-cat="all" class="chip active">All</button>
+                <button data-cat="beach" class="chip">Beach</button>
+                <button data-cat="city" class="chip">City</button>
+                <button data-cat="mountain" class="chip">Mountain</button>
+              </div>
+            </div>
+            <div class="filter-row">
+              <label>Price range (<span id="price-val">$200 - $2000</span>)</label>
+              <input id="price-range" type="range" min="100" max="5000" step="50" value="2000">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D/visual right column -->
+      <div class="hero-right reveal">
+        <div class="showcase-cards">
+          <div class="dest-card" style="background-image:url('https://images.unsplash.com/photo-1505761671935-60b3a7427bad?q=80&w=1200&auto=format&fit=crop')">
+            <div class="card-body"><strong>Paris</strong><span>From $1,099</span></div>
+          </div>
+          <div class="dest-card" style="background-image:url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop')">
+            <div class="card-body"><strong>Dubai</strong><span>From $999</span></div>
+          </div>
+          <div class="dest-card" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop')">
+            <div class="card-body"><strong>Maldives</strong><span>From $899</span></div>
+          </div>
+        </div>
+        <p class="muted sm">Hover cards & tilt for 3D effect • Smooth CSS transforms</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESTINATIONS -->
+  <section id="destinations" class="section container reveal">
+    <div class="section-head">
+      <h2>Popular Destinations</h2>
+      <p class="muted">Filter using categories or price to find best matches.</p>
+    </div>
+
+    <div class="controls">
+      <div class="left">
+        <label>Sort:</label>
+        <select id="sort-select">
+          <option value="pop">Most Popular</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+        </select>
+      </div>
+      <div class="right muted">Showing <span id="visible-count">6</span> of <span id="total-count">6</span></div>
+    </div>
+
+    <div id="cards" class="cards-grid">
+      <!-- cards will be static here (you can alter or make dynamic) -->
+      <article class="card" data-cat="beach" data-price="899">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop" alt="Maldives">
+        <div class="card-body">
+          <h3>Maldives</h3>
+          <p class="muted">Tropical paradise with crystal clear water.</p>
+          <div class="meta"><span class="price">$899</span><a class="link" href="#booking">Book</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="city" data-price="1099">
+        <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?q=80&w=1200&auto=format&fit=crop" alt="Paris">
+        <div class="card-body">
+          <h3>Paris</h3>
+          <p class="muted">City of lights, culture & cuisine.</p>
+          <div class="meta"><span class="price">$1,099</span><a class="link" href="#booking">Book</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="city" data-price="999">
+        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop" alt="Dubai">
+        <div class="card-body">
+          <h3>Dubai</h3>
+          <p class="muted">Luxury, deserts and modern skylines.</p>
+          <div class="meta"><span class="price">$999</span><a class="link" href="#booking">Book</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="mountain" data-price="699">
+        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop" alt="Swiss Alps">
+        <div class="card-body">
+          <h3>Swiss Alps</h3>
+          <p class="muted">Snowy peaks and alpine villages.</p>
+          <div class="meta"><span class="price">$699</span><a class="link" href="#booking">Book</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="beach" data-price="799">
+        <img src="https://images.unsplash.com/photo-1493558103817-58b2924bce98?q=80&w=1200&auto=format&fit=crop" alt="Bali">
+        <div class="card-body">
+          <h3>Bali</h3>
+          <p class="muted">Lush landscapes, surf and temples.</p>
+          <div class="meta"><span class="price">$799</span><a class="link" href="#booking">Book</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="city" data-price="499">
+        <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=1200&auto=format&fit=crop" alt="Istanbul">
+        <div class="card-body">
+          <h3>Istanbul</h3>
+          <p class="muted">Historic bazaars & stunning mosques.</p>
+          <div class="meta"><span class="price">$499</span><a class="link" href="#booking">Book</a></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section id="booking" class="section container reveal">
+    <div class="section-head">
+      <h2>Book Your Trip</h2>
+      <p class="muted">Fill details and get a booking summary instantly.</p>
+    </div>
+
+    <div class="booking-grid">
+      <form id="booking-form" class="booking-form">
+        <div class="form-row">
+          <label>Full name</label>
+          <input id="b-name" type="text" required placeholder="Your full name" />
+        </div>
+        <div class="form-row">
+          <label>Email</label>
+          <input id="b-email" type="email" required placeholder="you@example.com" />
+        </div>
+        <div class="form-row">
+          <label>Destination</label>
+          <select id="b-dest" required>
+            <option value="">Select destination</option>
+            <option>Maldives</option>
+            <option>Paris</option>
+            <option>Dubai</option>
+            <option>Swiss Alps</option>
+            <option>Bali</option>
+            <option>Istanbul</option>
+          </select>
+        </div>
+
+        <div class="form-row split">
+          <div>
+            <label>Check-in</label>
+            <input id="b-date" type="date" required />
+          </div>
+          <div>
+            <label>Guests</label>
+            <input id="b-guests" type="number" min="1" value="1" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Special Requests (optional)</label>
+          <textarea id="b-requests" rows="3" placeholder="e.g., airport pickup"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn" type="submit">Confirm Booking</button>
+          <button class="btn-outline" type="button" id="clear-book">Clear</button>
+        </div>
+
+        <p id="booking-msg" class="muted"></p>
+      </form>
+
+      <aside class="summary">
+        <h3>Booking Summary</h3>
+        <div id="summary-content" class="summary-card">
+          <p class="muted">No selection yet — fill the form.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" class="section container reveal">
+    <div class="section-head">
+      <h2>What travellers say</h2>
+    </div>
+
+    <div class="test-slider">
+      <button class="t-btn" id="prev">‹</button>
+      <div class="t-window" id="t-window">
+        <div class="t-track" id="t-track">
+          <blockquote class="t-item">
+            <p>"Smooth booking and amazing support. Maldives trip was perfect."</p>
+            <cite>— Sara K.</cite>
+          </blockquote>
+          <blockquote class="t-item">
+            <p>"Great UI and easy process. Booked Dubai in minutes."</p>
+            <cite>— Omar R.</cite>
+          </blockquote>
+          <blockquote class="t-item">
+            <p>"Loved the destination photos and clear pricing."</p>
+            <cite>— Fatima P.</cite>
+          </blockquote>
+        </div>
+      </div>
+      <button class="t-btn" id="next">›</button>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER & CONTACT -->
+  <section id="contact" class="section container reveal">
+    <div class="section-head">
+      <h2>Stay Updated</h2>
+      <p class="muted">Subscribe for deals and travel tips.</p>
+    </div>
+
+    <div class="newsletter">
+      <form id="newsletter-form" class="newsletter-form">
+        <input id="nl-email" type="email" placeholder="Enter your email" required />
+        <button class="btn" type="submit">Subscribe</button>
+      </form>
+      <p id="nl-msg" class="muted"></p>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>© <span id="year"></span> TravelHub</div>
+        <div class="muted">Made with ❤️ — Frontend demo</div>
+      </div>
+    </footer>
+  </section>
+</body>
+</html>

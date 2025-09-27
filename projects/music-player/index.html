@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music Streaming UI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+
+  <!-- Sidebar -->
+  <div class="flex h-screen">
+    <aside class="w-64 bg-gray-800 p-4 hidden md:block">
+      <h1 class="text-2xl font-bold mb-6">🎵 MyMusic</h1>
+      <nav class="space-y-4">
+        <a href="#trending" class="block hover:text-green-400">Trending</a>
+        <a href="#favorites" class="block hover:text-green-400">Favorites</a>
+        <a href="#queue" class="block hover:text-green-400">Queue</a>
+        <a href="#watchlater" class="block hover:text-green-400">Watch Later</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-6">
+      <!-- Top Navbar -->
+      <div class="flex items-center justify-between mb-6">
+        <input type="text" placeholder="Search songs..." 
+          class="w-1/2 p-2 rounded bg-gray-700 text-white focus:outline-none" id="searchInput"/>
+      </div>
+
+      <!-- Trending Section -->
+      <section id="trending" class="mb-10">
+        <h2 class="text-xl font-bold mb-4">🔥 Trending Songs</h2>
+        <div id="trendingSongs" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+      </section>
+
+      <!-- Favorites -->
+      <section id="favorites" class="mb-10">
+        <h2 class="text-xl font-bold mb-4">❤ Favorites</h2>
+        <div id="favoritesList" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+      </section>
+
+      <!-- Queue -->
+      <section id="queue" class="mb-10">
+        <h2 class="text-xl font-bold mb-4">🎶 Queue</h2>
+        <div id="queueList" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+      </section>
+
+      <!-- Watch Later -->
+      <section id="watchlater" class="mb-10">
+        <h2 class="text-xl font-bold mb-4">⏱ Watch Later</h2>
+        <div id="watchLaterList" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Player -->
+  <div class="fixed bottom-0 left-0 w-full bg-gray-800 p-4 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <img id="nowPlayingImg" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=80" class="w-12 h-12 rounded">
+      <div>
+        <h3 class="font-semibold" id="nowPlayingTitle">Now Playing</h3>
+        <p class="text-sm text-gray-400" id="nowPlayingArtist">Select a song...</p>
+      </div>
+    </div>
+    <div class="flex space-x-4">
+      <button id="prevBtn">⏮</button>
+      <button id="playPauseBtn">▶</button>
+      <button id="nextBtn">⏭</button>
+    </div>
+    <audio id="audioPlayer"></audio>
+  </div>
+
+  <script>
+    // Song Data with covers + demo MP3
+    const songs = [
+      { title: "Blinding Lights", artist: "The Weeknd", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+      { title: "Shape of You", artist: "Ed Sheeran", img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=300", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+      { title: "Stay", artist: "Justin Bieber", img: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=300", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+      { title: "Levitating", artist: "Dua Lipa", img: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?w=300", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" },
+      { title: "Perfect", artist: "Ed Sheeran", img: "https://images.unsplash.com/photo-1485579149621-3123dd979885?w=300", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" },
+    ];
+
+    const trendingContainer = document.getElementById("trendingSongs");
+    const favContainer = document.getElementById("favoritesList");
+    const queueContainer = document.getElementById("queueList");
+    const watchLaterContainer = document.getElementById("watchLaterList");
+
+    const nowPlayingImg = document.getElementById("nowPlayingImg");
+    const nowPlayingTitle = document.getElementById("nowPlayingTitle");
+    const nowPlayingArtist = document.getElementById("nowPlayingArtist");
+    const audio = document.getElementById("audioPlayer");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+
+    let favorites = [], queue = [], watchLater = [];
+    let currentSongIndex = null, isPlaying = false;
+
+    // Render Songs
+    function renderSongs(list = songs) {
+      trendingContainer.innerHTML = "";
+      list.forEach((song, index) => {
+        const card = document.createElement("div");
+        card.className = "bg-gray-800 rounded-lg p-3 hover:bg-gray-700";
+        card.innerHTML = `
+          <img src="${song.img}" class="rounded mb-2 h-32 w-full object-cover">
+          <h3 class="font-semibold">${song.title}</h3>
+          <p class="text-sm text-gray-400">${song.artist}</p>
+          <div class="flex justify-between mt-2">
+            <button class="text-green-400">▶</button>
+            <button class="text-red-400">❤</button>
+            <button class="text-blue-400">⏱</button>
+            <button class="text-yellow-400">➕</button>
+          </div>
+        `;
+        // Button events
+        card.querySelector(".text-green-400").onclick = () => playSong(index);
+        card.querySelector(".text-red-400").onclick = () => addToFavorites(index);
+        card.querySelector(".text-blue-400").onclick = () => addToWatchLater(index);
+        card.querySelector(".text-yellow-400").onclick = () => addToQueue(index);
+        trendingContainer.appendChild(card);
+      });
+    }
+
+    // Functions
+    function playSong(index) {
+      currentSongIndex = index;
+      const song = songs[index];
+      nowPlayingImg.src = song.img;
+      nowPlayingTitle.textContent = song.title;
+      nowPlayingArtist.textContent = song.artist;
+      audio.src = song.src;
+      audio.play();
+      isPlaying = true;
+      playPauseBtn.textContent = "⏸";
+    }
+
+    function togglePlayPause() {
+      if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+        playPauseBtn.textContent = "▶";
+      } else {
+        audio.play();
+        isPlaying = true;
+        playPauseBtn.textContent = "⏸";
+      }
+    }
+
+    function addToFavorites(index) {
+      favorites.push(songs[index]);
+      renderList(favContainer, favorites);
+    }
+    function addToQueue(index) {
+      queue.push(songs[index]);
+      renderList(queueContainer, queue);
+    }
+    function addToWatchLater(index) {
+      watchLater.push(songs[index]);
+      renderList(watchLaterContainer, watchLater);
+    }
+
+    function renderList(container, list) {
+      container.innerHTML = "";
+      list.forEach(song => {
+        const card = document.createElement("div");
+        card.className = "bg-gray-800 rounded-lg p-3 hover:bg-gray-700";
+        card.innerHTML = `
+          <img src="${song.img}" class="rounded mb-2 h-24 w-full object-cover">
+          <h3 class="font-semibold text-sm">${song.title}</h3>
+          <p class="text-xs text-gray-400">${song.artist}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Search functionality
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      const value = e.target.value.toLowerCase();
+      const filtered = songs.filter(s => s.title.toLowerCase().includes(value) || s.artist.toLowerCase().includes(value));
+      renderSongs(filtered);
+    });
+
+    // Controls
+    playPauseBtn.onclick = togglePlayPause;
+
+    document.getElementById("prevBtn").onclick = () => {
+      if (currentSongIndex > 0) playSong(currentSongIndex - 1);
+    };
+    document.getElementById("nextBtn").onclick = () => {
+      if (currentSongIndex < songs.length - 1) playSong(currentSongIndex + 1);
+    };
+
+    renderSongs();
+  </script>
+</body>
+</html>

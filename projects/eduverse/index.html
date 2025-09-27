@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EduVerse — Learn Without Limits</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles & script -->
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- PAGE LOADER -->
+  <div id="page-loader" class="page-loader">
+    <div class="loader-circle"></div>
+  </div>
+
+  <!-- TOPBAR / HEADER -->
+  <header class="topbar">
+    <div class="container topbar-grid">
+      <a class="brand" href="#home">Edu<span>Verse</span></a>
+
+      <div class="controls">
+        <input id="search-input" class="search-input" type="search" placeholder="Search courses (e.g. React, UX) ..." aria-label="Search courses">
+        <select id="category-select" aria-label="Filter by category">
+          <option value="all">All categories</option>
+          <option value="Tech">Tech</option>
+          <option value="Design">Design</option>
+          <option value="Business">Business</option>
+        </select>
+
+        <select id="sort-select" aria-label="Sort courses">
+          <option value="pop">Most Popular</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+        </select>
+
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark mode">🌙</button>
+
+        <button id="open-dashboard" class="btn small">My Dashboard</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-inner container">
+      <div class="hero-left">
+        <h1>Learn <span class="accent">new skills</span> — build your future</h1>
+        <p class="lead">Interactive courses, real projects & a smooth learning experience. Enroll, wishlist and track your progress.</p>
+        <div class="hero-actions">
+          <a href="#courses" class="btn">Browse Courses</a>
+          <a href="#dashboard" class="btn outline">My Courses</a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-card glass">
+          <h4>Top Skill</h4>
+          <h3>React Frontend</h3>
+          <p class="muted">Interactive components, hooks & real-world projects</p>
+          <div class="meta">
+            <span class="chip">20h</span>
+            <span class="chip">Intermediate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES -->
+  <main id="courses" class="section container">
+    <div class="section-head">
+      <h2>Courses</h2>
+      <p class="muted">Filter, search and enroll in professional courses — all frontend-friendly.</p>
+    </div>
+
+    <div id="grid" class="grid"></div>
+
+    <!-- no results -->
+    <p id="no-results" class="muted center" style="display:none">No courses found.</p>
+  </main>
+
+  <!-- DASHBOARD (modal drawer style) -->
+  <aside id="dashboard" class="drawer" aria-hidden="true">
+    <div class="drawer-inner">
+      <button id="close-dashboard" class="close-btn" aria-label="Close dashboard">✕</button>
+      <h3>My Dashboard</h3>
+
+      <div class="dash-section">
+        <h4>Enrolled Courses</h4>
+        <ul id="enrolled-list" class="list"></ul>
+      </div>
+
+      <div class="dash-section">
+        <h4>Wishlist</h4>
+        <ul id="wishlist" class="list"></ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ENROLL MODAL -->
+  <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button id="modal-close" class="modal-close" aria-label="Close">✕</button>
+      <h3 id="modal-title"></h3>
+      <p id="modal-body"></p>
+      <div class="modal-actions">
+        <button id="modal-confirm" class="btn">Confirm</button>
+        <button id="modal-cancel" class="btn outline">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BACK TO TOP -->
+  <button id="back-top" class="back-top" aria-label="Back to top">↑</button>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>© <span id="year"></span> EduVerse</div>
+      <div class="muted">Built with ❤️ — Frontend demo</div>
+    </div>
+  </footer>
+
+</body>
+</html>
