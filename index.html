@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ali — Frontend Developer | HDSE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="nav-wrap">
+    <nav class="nav container">
+      <div class="brand">
+        <a href="#home"><span class="logo-accent">Ali</span> Sheikh</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#availability">Availability</a></li>
+        <li><a href="#contact" class="btn-small">Contact</a></li>
+      </ul>
+      <button class="hamburger" aria-label="menu">☰</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <main>
+  <section id="home" class="hero container">
+    <div class="hero-left">
+      <h1>Hi, I'm <span class="accent">Ali</span></h1>
+      <p class="subtitle">Frontend Developer • HDSE Student — I build responsive, animated UI that leave lasting impressions.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#projects">View Projects</a>
+        <a class="btn-outline" href="Ali_Sheikh_CV.pdf" download>Download CV (PDF)</a>
+      </div>
+
+      <div class="typing-row">
+        <span class="typing-label">I make:</span>
+        <span class="typing" data-words='["Pixel-perfect UIs","Accessible Interfaces","Fast Frontends","Interactive Animations"]'></span>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <!-- 3D Cube (interactive) -->
+      <div class="cube-wrap" tabindex="0" aria-label="3D showcase">
+        <div class="cube" id="cube">
+          <div class="face face-front">HTML</div>
+          <div class="face face-back">CSS</div>
+          <div class="face face-right">JS</div>
+          <div class="face face-left">React</div>
+          <div class="face face-top">UX</div>
+          <div class="face face-bottom">Git</div>
+        </div>
+      </div>
+      <p class="cube-hint">Hover or drag to rotate • 3D preview</p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about container reveal">
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>About Me</h2>
+        <p>I'm an HDSE student focused on frontend development: HTML, modern CSS, and JavaScript. I love building crisp interfaces, performance-minded pages, and animations that still feel fast and accessible.</p>
+        <ul class="about-list">
+          <li>📚 HDSE — Software Engineering (ongoing)</li>
+          <li>💻 Comfortable with Git, responsive layouts, and component-based structure</li>
+          <li>🎯 Looking for internships, freelance work, and mentorship collaborations</li>
+        </ul>
+      </div>
+      <div class="about-card">
+        <img src="https://images.unsplash.com/photo-1548092372-6b37b6a6f2b8?q=80&w=800&auto=format&fit=crop" alt="avatar" />
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="projects container reveal">
+    <h2>Highlighted Projects</h2>
+    <p class="muted">Click a project to view live demo or GitHub. (10 slots — replace placeholders with your real projects)</p>
+
+    <div class="project-grid">
+      <!-- Repeat this card for each project (10 total) -->
+      <!-- Project 1 -->
+       
+        <!-- Project TravelHub -->
+<a class="proj-card" href="projects/music-player/index.html" target="_blank" rel="noopener">
+  <!-- yahan apna screenshot ya live preview image daalna -->
+  <div class="proj-media" style="background-image:url('Screenshot\ \(88\).png')"></div>
+  
+  <div class="proj-body">
+    <h3>“MyMusic</h3>
+    <h2>Frontend Website</h2>
+    <p>“MyMusic — a custom music streaming website  featuring search, trending playlists, favorites, queue management & a real-time audio player.”.</p>
+    <div class="proj-tags">
+      <span>HTML</span><span>CSS</span><span>JavaScript</span>
+    </div>
+  </div>
+</a>
+
+
+      <!-- Project 2 -->
+      <a class="proj-card" href="projects/eduverse/index.html" target="_blank" rel="noopener">
+  <!-- yahan apna screenshot ya live preview image daalna -->
+  <div class="proj-media" style="background-image:url('Screenshot\ \(87\).png')"></div>
+  
+  <div class="proj-body">
+    <h3>EduVerse</h3>
+    <h2>Frontend Website</h2>
+    <p>"EduVerse — an e-learning platform I personally built with search, filters, enrollment, wishlist & a student dashboard."</p>
+    <div class="proj-tags">
+      <span>HTML</span><span>CSS</span><span>JavaScript</span>
+    </div>
+  </div>
+</a>
+
+
+      <!-- Project 10 -->
+    <!-- Project TravelHub -->
+<a class="proj-card" href="projects/Travel Booking Website/index.html" target="_blank" rel="noopener">
+  <!-- yahan apna screenshot ya live preview image daalna -->
+  <div class="proj-media" style="background-image:url('Screenshot\ \(84\).png')"></div>
+  
+  <div class="proj-body">
+    <h3>TravelHub</h3>
+    <h2>Frontend Website</h2>
+    <p>"A travel booking website with filters, booking form & animations."</p>
+    <div class="proj-tags">
+      <span>HTML</span><span>CSS</span><span>JavaScript</span>
+    </div>
+  </div>
+</a>
+
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="skills container reveal">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill">
+        <label>HTML</label>
+        <div class="skill-bar"><span style="width:95%"></span></div>
+      </div>
+      <div class="skill">
+        <label>CSS</label>
+        <div class="skill-bar"><span style="width:90%"></span></div>
+      </div>
+      <div class="skill">
+        <label>JavaScript</label>
+        <div class="skill-bar"><span style="width:85%"></span></div>
+      </div>
+    
+      <div class="skill">
+        <label>Git / GitHub</label>
+        <div class="skill-bar"><span style="width:80%"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVAILABILITY (For Jobss wale & for those who don't hire) -->
+  <section id="availability" class="availability container reveal">
+    <h2>Availability</h2>
+    <div class="avail-row">
+      <div class="avail-card">
+        <h3>Available for hire</h3>
+        <p class="muted">Open to internships, part-time frontend roles, and freelance projects.</p>
+        <button id="toggle-hire" class="btn">I'm available</button>
+      </div>
+
+      <div class="avail-card alt" id="not-hiring-space">
+        <h3>Not hiring right now?</h3>
+        <p class="muted">If your company is not hiring, you can still:</p>
+        <ul>
+          <li>👉 Request a portfolio review or code feedback</li>
+          <li>👉 Ask for a short paid freelance task / trial</li>
+          <li>👉 Invite me to workshops, mentorship, or collaboration</li>
+        </ul>
+        <a href="#contact" class="btn-outline">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact container reveal">
+    <h2>Contact</h2>
+    <p class="muted">Want to work together? Send a message — I'll reply within 48 hours.</p>
+    <form id="contact-form" class="contact-form" action="#" method="post" onsubmit="return false;">
+      <div class="form-grid">
+        <input type="text" id="name" placeholder="Your name" required />
+        <input type="email" id="email" placeholder="Your email" required />
+        <textarea id="message" placeholder="Your message" rows="5" required></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn" id="send-btn">Send Message</button>
+        <button class="btn-outline" id="clear-btn" type="button">Clear</button>
+      </div>
+      <p id="form-msg" class="muted" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <p>© <span id="year"></span> Ali Sheikh — Frontend Developer</p>
+      <div class="socials">
+        <a href="#" aria-label="github">GitHub</a>
+        <a href="#" aria-label="linkedin">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+  </main>
+</body>
+</html>
