@@ -39,50 +39,63 @@ document.addEventListener('DOMContentLoaded', () => {
   const sortSelect = document.getElementById('sort-select');
   sortSelect && sortSelect.addEventListener('change', ()=> applyFilters());
 
-  // Filter function (category + price + sort)
+  // Search input (from hero)
+  const searchInput = document.getElementById('search-dest');
+
+  // Filter function (category + price + sort + text search)
   function applyFilters(){
     const cards = Array.from(document.querySelectorAll('#cards .card'));
     const maxPrice = Number(priceRange?.value || 5000);
+    const q = (searchInput?.value || '').toLowerCase().trim();
+
     const filtered = cards.filter(card => {
       const cat = card.dataset.cat || 'all';
       const price = Number(card.dataset.price || 0);
+
+      // Category check
       if(activeCategory !== 'all' && cat !== activeCategory) return false;
+
+      // Price check
       if(price > maxPrice) return false;
+
+      // Text search (destination name)
+      if(q){
+        const nameEl = card.querySelector('h3');
+        const name = nameEl ? nameEl.textContent.toLowerCase() : '';
+        if(!name.includes(q)) return false;
+      }
+
       return true;
     });
 
-    // Sorting
+    // Sorting - keep numeric compare
     const sort = sortSelect?.value || 'pop';
-    if(sort === 'price-asc') filtered.sort((a,b)=>a.dataset.price - b.dataset.price);
-    if(sort === 'price-desc') filtered.sort((a,b)=>b.dataset.price - a.dataset.price);
+    if(sort === 'price-asc') filtered.sort((a,b)=> Number(a.dataset.price) - Number(b.dataset.price));
+    if(sort === 'price-desc') filtered.sort((a,b)=> Number(b.dataset.price) - Number(a.dataset.price));
 
-    // Update DOM
+    // Update DOM: empty and append filtered in order
     const grid = document.getElementById('cards');
+    if(!grid) return;
     grid.innerHTML = '';
     filtered.forEach(c => grid.appendChild(c));
+
+    // Update counts
     document.getElementById('visible-count').textContent = filtered.length;
     document.getElementById('total-count').textContent = cards.length;
     document.getElementById('result-count').textContent = filtered.length;
   }
 
   // Initial counts
-  document.getElementById('total-count').textContent = document.querySelectorAll('#cards .card').length;
-  document.getElementById('visible-count').textContent = document.querySelectorAll('#cards .card').length;
+  const initialCards = document.querySelectorAll('#cards .card').length;
+  document.getElementById('total-count').textContent = initialCards;
+  document.getElementById('visible-count').textContent = initialCards;
+  document.getElementById('result-count').textContent = initialCards;
 
-  // Search form: simple front-end search by destination
+  // Bind search form submit to unified filter (prevents page reload)
   const searchForm = document.getElementById('search-form');
   searchForm && searchForm.addEventListener('submit', e=>{
     e.preventDefault();
-    const q = (document.getElementById('search-dest').value || '').toLowerCase().trim();
-    if(!q){ applyFilters(); return; }
-    const cards = Array.from(document.querySelectorAll('#cards .card'));
-    cards.forEach(c => {
-      const name = c.querySelector('h3').textContent.toLowerCase();
-      c.style.display = name.includes(q) ? '' : 'none';
-    });
-    const visible = cards.filter(c => c.style.display !== 'none');
-    document.getElementById('result-count').textContent = visible.length;
-    document.getElementById('visible-count').textContent = visible.length;
+    applyFilters();
   });
 
   // Booking form behavior & summary
@@ -124,13 +137,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Testimonials slider
   const tTrack = document.getElementById('t-track');
-  const items = tTrack.querySelectorAll('.t-item').length;
+  const items = tTrack ? tTrack.querySelectorAll('.t-item').length : 0;
   let tIndex = 0;
-  const updateT = ()=> tTrack.style.transform = `translateX(-${tIndex * 100}%)`;
-  document.getElementById('next')?.addEventListener('click', ()=>{ tIndex = (tIndex+1) % items; updateT(); });
-  document.getElementById('prev')?.addEventListener('click', ()=>{ tIndex = (tIndex-1+items) % items; updateT(); });
-  // auto rotate
-  setInterval(()=>{ tIndex = (tIndex+1) % items; updateT(); }, 6000);
+  const updateT = ()=> { if(tTrack) tTrack.style.transform = `translateX(-${tIndex * 100}%)`; };
+  if(document.getElementById('next')) {
+    document.getElementById('next').addEventListener('click', ()=>{ tIndex = (tIndex+1) % items; updateT(); });
+  }
+  if(document.getElementById('prev')) {
+    document.getElementById('prev').addEventListener('click', ()=>{ tIndex = (tIndex-1+items) % items; updateT(); });
+  }
+  // auto rotate (only if there are items)
+  if(items > 0) setInterval(()=>{ tIndex = (tIndex+1) % items; updateT(); }, 6000);
 
   // Newsletter mock
   document.getElementById('newsletter-form')?.addEventListener('submit', e=>{
@@ -154,5 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // set year
-  document.getElementById('year').textContent = new Date().getFullYear();
+  const yearEl = document.getElementById('year');
+  if(yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // run initial filter to ensure UI is consistent
+  applyFilters();
 });
