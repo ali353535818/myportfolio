@@ -106,4 +106,31 @@ body{
   .cards-grid{grid-template-columns:1fr}
   .nav{display:none}
   .cta{display:none}
+  /* General Responsive Fix */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* spacing between divs */
 }
+
+/* Ensure divs are responsive */
+.container > div {
+    flex: 1 1 100%; /* full width by default on small screens */
+    box-sizing: border-box;
+}
+
+/* Media Query for larger screens */
+@media (min-width: 768px) {
+    .container > div {
+        flex: 1 1 calc(50% - 10px); /* 2 divs side-by-side */
+    }
+}
+
+@media (min-width: 1024px) {
+    .container > div {
+        flex: 1 1 calc(33.33% - 10px); /* 3 divs side-by-side */
+    }
+}
+
+}
+
